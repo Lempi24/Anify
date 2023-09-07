@@ -24,8 +24,6 @@ const db = getDatabase();
 const dbref = ref(db);
 const parent = document.querySelector('.main__tiles');
 
-const formData = document.querySelector('#form_');
-
 get(child(dbref, 'Openings/'))
 	.then((snapshot) => {
 		snapshot.forEach((childSnapshot) => {
