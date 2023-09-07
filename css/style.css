@@ -718,6 +718,9 @@ input:not(:placeholder-shown) ~ label {
   .nav__list {
     display: none;
   }
+  .spacing {
+    width: 60%;
+  }
   .volume-section {
     display: none;
   }
