@@ -687,6 +687,9 @@ input:not(:placeholder-shown) ~ label {
 			top: 50%;
 			right: 5%;
 		}
+		&__hero-img {
+			background-position: 25% 25%;
+		}
 	}
 	.nav {
 		img {
