@@ -187,3 +187,15 @@ function skipTime() {
 }
 timeStampSlider.oninput = skipTime;
 playerBgcContainerElement.addEventListener('click', () => {});
+playersArray.forEach(function (player, index) {
+	player.addEventListener('onStateChange', function (event) {
+		if (event.data === YT.PlayerState.BUFFERING) {
+			var otherPlayerIndex = index === 0 ? 1 : 0;
+			playersArray[otherPlayerIndex].pauseVideo();
+		}
+		if (event.data === YT.PlayerState.PLAYING) {
+			var otherPlayerIndex = index === 0 ? 1 : 0;
+			playersArray[otherPlayerIndex].playVideo();
+		}
+	});
+});
