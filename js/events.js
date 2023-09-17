@@ -103,7 +103,18 @@ function startShowingCurrentTime() {
 tag.onload = onYouTubeIframeAPIReady;
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+let testInterval;
+let syncInterval;
+function startIntervals() {
+	syncInterval = setInterval(intervalSync, 500);
+}
+
+function stopIntervals() {
+	clearInterval(testInterval);
+	clearInterval(syncInterval);
+}
 stateBtn.addEventListener('click', () => {
+	startIntervals();
 	const playerState = player.getPlayerState();
 	if (playerState == YT.PlayerState.CUED) {
 		for (let i = 0; i < playersArray.length; i++) {
@@ -145,6 +156,7 @@ closeBtn.addEventListener('click', () => {
 		"<div class='player-background main__active' id='player-background'></div><div class='player'id='player'></div>";
 	playerBgcContainerElement.innerHTML = resetBackground;
 	playersArray = [];
+	stopIntervals();
 });
 function changeIcon(volume) {
 	if (volume >= 50) {
@@ -187,15 +199,17 @@ function skipTime() {
 }
 timeStampSlider.oninput = skipTime;
 playerBgcContainerElement.addEventListener('click', () => {});
-playersArray.forEach(function (player, index) {
-	player.addEventListener('onStateChange', function (event) {
-		if (event.data === YT.PlayerState.BUFFERING) {
-			var otherPlayerIndex = index === 0 ? 1 : 0;
-			playersArray[otherPlayerIndex].pauseVideo();
-		}
-		if (event.data === YT.PlayerState.PLAYING) {
-			var otherPlayerIndex = index === 0 ? 1 : 0;
-			playersArray[otherPlayerIndex].playVideo();
-		}
-	});
-});
+let skip = true;
+function intervalSync() {
+	const playerState1 = playersArray[0].getPlayerState();
+	const playerState2 = playersArray[1].getPlayerState();
+	if (playerState1 === 3 || playerState2 === 3) {
+		playersArray[0].pauseVideo();
+		playersArray[1].pauseVideo();
+		skip = false;
+	} else if (!skip) {
+		playersArray[0].playVideo();
+		playersArray[1].playVideo();
+		skip = true;
+	}
+}
