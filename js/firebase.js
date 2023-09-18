@@ -65,8 +65,7 @@ get(child(dbref, 'Openings/'))
 			tileElement.appendChild(tileInfoElement);
 
 			imgElement.addEventListener('click', () => {
-				onYouTubeIframeAPIReady(opening, 'player-background');
-				onYouTubeIframeAPIReady(opening, 'player');
+				onYouTubeIframeAPIReady(opening);
 				togglePlayerActive();
 			});
 			imgElement.addEventListener('mouseenter', () => {

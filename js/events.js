@@ -1,5 +1,7 @@
 let player;
+let player2;
 let playersArray = [];
+let intervalId;
 const playerElement = document.querySelector('#player-background');
 const iconBtn = document.querySelector('#icon-btn');
 const stateBtn = document.querySelector('#player-btn');
@@ -26,7 +28,6 @@ const h1 = document.querySelector('#h1');
 const tag = document.createElement('script');
 tag.src = 'https://www.youtube.com/iframe_api';
 const firstScriptTag = document.getElementsByTagName('script')[0];
-
 burgerMenu.addEventListener('click', () => {
 	if (burgerMenu.classList.contains('change')) {
 		burgerMenu.classList.remove('change');
@@ -39,8 +40,8 @@ burgerMenu.addEventListener('click', () => {
 	}
 });
 
-function onYouTubeIframeAPIReady(opening, element) {
-	player = new YT.Player(element, {
+function onYouTubeIframeAPIReady(opening) {
+	player = new YT.Player('player', {
 		height: '360',
 		width: '640',
 		videoId: `${opening.Video}`,
@@ -53,6 +54,22 @@ function onYouTubeIframeAPIReady(opening, element) {
 		},
 	});
 	playersArray.push(player);
+	player2 = new YT.Player('player-background', {
+		height: '360',
+		width: '640',
+		videoId: `${opening.Video}`,
+		events: {
+			onReady: mute,
+		},
+		playerVars: {
+			controls: '0',
+			iv_load_policy: '3',
+		},
+	});
+	playersArray.push(player2);
+}
+function mute() {
+	player2.setVolume(0);
 }
 function showAnimeName(opening) {
 	const tileId = document.getElementById(`${opening.Id}`);
@@ -105,11 +122,11 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 stateBtn.addEventListener('click', () => {
 	const playerState = player.getPlayerState();
+	if (!intervalId) {
+		intervalId = setInterval(synchronizeBackgroundVideo, 1000);
+	}
 	if (playerState == YT.PlayerState.CUED) {
 		for (let i = 0; i < playersArray.length; i++) {
-			if (i == 0) {
-				playersArray[i].setVolume(0);
-			}
 			playersArray[i].playVideo();
 		}
 		iconBtn.className = 'fa-solid fa-pause';
@@ -145,6 +162,7 @@ closeBtn.addEventListener('click', () => {
 		"<div class='player-background main__active' id='player-background'></div><div class='player'id='player'></div>";
 	playerBgcContainerElement.innerHTML = resetBackground;
 	playersArray = [];
+	clearInterval(intervalId);
 });
 function changeIcon(volume) {
 	if (volume >= 50) {
@@ -187,3 +205,13 @@ function skipTime() {
 }
 timeStampSlider.oninput = skipTime;
 playerBgcContainerElement.addEventListener('click', () => {});
+function synchronizeBackgroundVideo() {
+	const mainPlayerTime = player.getCurrentTime();
+	const backgroundPlayerTime = player2.getCurrentTime();
+	const mainPlayerTimeRounded = Math.round(mainPlayerTime * 1000) / 1000;
+	const backgroundPlayerTimeRounded =
+		Math.round(backgroundPlayerTime * 1000) / 1000;
+	if (mainPlayerTimeRounded !== backgroundPlayerTimeRounded - 0.001) {
+		player2.seekTo(mainPlayerTimeRounded);
+	}
+}
