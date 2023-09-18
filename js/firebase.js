@@ -40,7 +40,6 @@ get(child(dbref, 'Openings/'))
 			imgElement.src = opening.Image;
 
 			const aElement = document.createElement('a');
-			aElement.href = '#main';
 
 			const tileInfoElement = document.createElement('div');
 			tileInfoElement.classList.add('main__tile-info');

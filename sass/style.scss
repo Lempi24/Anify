@@ -378,6 +378,7 @@ table {
 	pointer-events: none;
 }
 .player-bcg-container {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -394,6 +395,7 @@ table {
 	width: 100%;
 	height: 100%;
 	filter: blur(10px);
+	transform: scale(1.04);
 }
 .player-controlls {
 	position: fixed;
@@ -716,6 +718,10 @@ input:not(:placeholder-shown) ~ label {
 	}
 	.player {
 		height: 50%;
+	}
+	.player {
+		width: 100%;
+		height: 60%;
 	}
 }
 

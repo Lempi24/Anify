@@ -1,7 +1,7 @@
 let player;
 let player2;
 let playersArray = [];
-let intervalId;
+let intervalId = null;
 const playerElement = document.querySelector('#player-background');
 const iconBtn = document.querySelector('#icon-btn');
 const stateBtn = document.querySelector('#player-btn');
@@ -163,6 +163,7 @@ closeBtn.addEventListener('click', () => {
 	playerBgcContainerElement.innerHTML = resetBackground;
 	playersArray = [];
 	clearInterval(intervalId);
+	intervalId = null;
 });
 function changeIcon(volume) {
 	if (volume >= 50) {
@@ -208,10 +209,10 @@ playerBgcContainerElement.addEventListener('click', () => {});
 function synchronizeBackgroundVideo() {
 	const mainPlayerTime = player.getCurrentTime();
 	const backgroundPlayerTime = player2.getCurrentTime();
-	const mainPlayerTimeRounded = Math.round(mainPlayerTime * 1000) / 1000;
-	const backgroundPlayerTimeRounded =
-		Math.round(backgroundPlayerTime * 1000) / 1000;
-	if (mainPlayerTimeRounded !== backgroundPlayerTimeRounded - 0.001) {
-		player2.seekTo(mainPlayerTimeRounded);
+	const mainPlayerTimeRounded = Math.round(mainPlayerTime * 100); // Przelicz na setne sekundy
+	const backgroundPlayerTimeRounded = Math.round(backgroundPlayerTime * 100); // Przelicz na setne sekundy
+	if (mainPlayerTimeRounded !== backgroundPlayerTimeRounded) {
+		const seekTimeInSeconds = mainPlayerTimeRounded / 100; // Przelicz z powrotem na sekundy
+		player2.seekTo(seekTimeInSeconds);
 	}
 }
