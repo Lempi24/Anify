@@ -11,7 +11,7 @@ html,
 body {
   position: relative;
   height: 100%;
-  font-family: "Roboto", sans-serif;
+  font-family: "Hanken Grotesk", sans-serif;
 }
 
 body {
@@ -69,7 +69,11 @@ table {
   max-width: 150px;
 }
 .nav__list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   position: relative;
+  min-width: 40%;
 }
 .nav__item {
   position: relative;
@@ -77,6 +81,7 @@ table {
   text-transform: uppercase;
   z-index: 0;
   color: #fa9805;
+  font-size: 2rem;
 }
 .nav__item::before, .nav__item::after {
   content: "";
@@ -138,13 +143,13 @@ table {
   background-color: white;
   border-radius: 60px;
   transition: width 0.5s;
-  overflow: hidden;
 }
 .nav__searchResult {
   position: absolute;
   width: 100%;
   height: 300px;
   right: 0;
+  top: 100%;
   overflow: hidden;
   overflow-y: auto;
   border-radius: 20px;

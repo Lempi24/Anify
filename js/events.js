@@ -51,6 +51,7 @@ function onYouTubeIframeAPIReady(opening) {
 		playerVars: {
 			controls: '0',
 			iv_load_policy: '3',
+			suggestedQuality: 'highres',
 		},
 	});
 	playersArray.push(player);
@@ -64,6 +65,7 @@ function onYouTubeIframeAPIReady(opening) {
 		playerVars: {
 			controls: '0',
 			iv_load_policy: '3',
+			suggestedQuality: 'small',
 		},
 	});
 	playersArray.push(player2);
@@ -211,6 +213,7 @@ function synchronizeBackgroundVideo() {
 	const backgroundPlayerTime = player2.getCurrentTime();
 	const mainPlayerTimeRounded = Math.round(mainPlayerTime * 100); // Przelicz na setne sekundy
 	const backgroundPlayerTimeRounded = Math.round(backgroundPlayerTime * 100); // Przelicz na setne sekundy
+	console.log(mainPlayerTimeRounded + ',' + backgroundPlayerTimeRounded);
 	if (mainPlayerTimeRounded !== backgroundPlayerTimeRounded) {
 		const seekTimeInSeconds = mainPlayerTimeRounded / 100; // Przelicz z powrotem na sekundy
 		player2.seekTo(seekTimeInSeconds);
