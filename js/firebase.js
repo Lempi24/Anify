@@ -113,8 +113,7 @@ export function performSearch(searchInput, resultsArea) {
 							resultTile.appendChild(tileName);
 
 							resultTile.addEventListener('click', () => {
-								onYouTubeIframeAPIReady(opening, 'player-background');
-								onYouTubeIframeAPIReady(opening, 'player');
+								onYouTubeIframeAPIReady(opening);
 								togglePlayerActive();
 							});
 						}
