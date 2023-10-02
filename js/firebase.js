@@ -29,51 +29,63 @@ get(child(dbref, 'Openings/'))
 		snapshot.forEach((childSnapshot) => {
 			const opening = childSnapshot.val();
 
-			const tileElement = document.createElement('div');
-			tileElement.classList.add('main__tile');
+			const cardElement = document.createElement('div');
+			cardElement.classList.add('card');
 
-			const nameElement = document.createElement('div');
-			nameElement.classList.add('main__nameDiv');
-			nameElement.id = opening.Id;
+			const imageContainer = document.createElement('div');
+			imageContainer.classList.add('image-container');
 
-			const imgElement = document.createElement('img');
-			imgElement.src = opening.Image;
+			const imageElement = document.createElement('img');
+			imageElement.src = opening.Image;
 
-			const aElement = document.createElement('a');
+			const infoContainer = document.createElement('div');
+			infoContainer.classList.add('info');
 
-			const tileInfoElement = document.createElement('div');
-			tileInfoElement.classList.add('main__tile-info');
+			const h2Element = document.createElement('h2');
+			h2Element.classList.add('anime-title');
+			h2Element.textContent = opening.Name;
 
-			const titleElement = document.createElement('h2');
-			titleElement.textContent = opening.Title;
+			const openingTitleElement = document.createElement('p');
+			openingTitleElement.classList.add('opening-title');
+			openingTitleElement.textContent = opening.Title;
 
-			const authorElement = document.createElement('h3');
+			const authorElement = document.createElement('p');
+			authorElement.classList.add('author');
 			authorElement.textContent = opening.Author;
 
-			const nameH2 = document.createElement('h2');
-			nameH2.classList.add('h3center');
-			nameH2.textContent = opening.Name;
+			const buttonsElement = document.createElement('div');
+			buttonsElement.classList.add('buttons');
 
-			tileInfoElement.appendChild(titleElement);
-			tileInfoElement.appendChild(authorElement);
-			nameElement.appendChild(nameH2);
+			const angleLeft = document.createElement('i');
+			angleLeft.classList.add('fa-solid');
+			angleLeft.classList.add('fa-angle-left');
+			const circlePlay = document.createElement('i');
+			circlePlay.classList.add('fa-regular');
+			circlePlay.classList.add('fa-circle-play');
+			const angleRight = document.createElement('i');
+			angleRight.classList.add('fa-solid');
+			angleRight.classList.add('fa-angle-right');
 
-			aElement.appendChild(imgElement);
-			tileElement.appendChild(nameElement);
-			tileElement.appendChild(aElement);
-			tileElement.appendChild(tileInfoElement);
+			buttonsElement.appendChild(angleLeft);
+			buttonsElement.appendChild(circlePlay);
+			buttonsElement.appendChild(angleRight);
 
-			imgElement.addEventListener('click', () => {
+			infoContainer.appendChild(h2Element);
+			infoContainer.appendChild(openingTitleElement);
+			infoContainer.appendChild(authorElement);
+
+			imageContainer.appendChild(imageElement);
+
+			cardElement.appendChild(imageContainer);
+			cardElement.appendChild(infoContainer);
+			cardElement.appendChild(buttonsElement);
+
+			parent.appendChild(cardElement);
+
+			cardElement.addEventListener('click', () => {
 				onYouTubeIframeAPIReady(opening);
 				togglePlayerActive();
 			});
-			imgElement.addEventListener('mouseenter', () => {
-				showAnimeName(opening);
-			});
-			imgElement.addEventListener('mouseout', () => {
-				hideAnimeName(opening);
-			});
-			parent.appendChild(tileElement);
 		});
 	})
 	.catch((error) => {

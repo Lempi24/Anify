@@ -44,6 +44,7 @@
             </div>
         </nav>
         <div class="header__hero-img">
+
             <div class="mobile-nav" id="mobile-nav">
                 <div class="nav__search mobile">
                     <div class="nav__icon">
@@ -68,38 +69,36 @@
         </div>
         </div>
     </header>
-    <main class="player-container" id="player-container">
-        <div class="player-bcg-container" id="player-bcg-container">
-            <div class="player-background main__active" id="player-background">
-            </div>
-            <div class="player" id="player"></div>
+    <div class="player-bcg-container" id="player-bcg-container">
+        <div class="player-background main__active" id="player-background">
         </div>
+        <div class="player" id="player"></div>
+    </div>
+    </div>
+    <div class="player-controlls player__notactive" id="player-controlls">
+        <div id="time-slider" class="time-slider">
+            <h3 class="timeh3" id="currentTime">0</h3>
+            <input type="range" class="slider" id="timeSlider" min="0" value="0">
+            <h3 id="fullTimeH3" class="timeh3">0</h3>
         </div>
-        <div class="player-controlls player__notactive" id="player-controlls">
-            <div id="time-slider" class="time-slider">
-                <h3 class="timeh3" id="currentTime">0</h3>
-                <input type="range" class="slider" id="timeSlider" min="0" value="0">
-                <h3 id="fullTimeH3" class="timeh3">0</h3>
-            </div>
-            <div class="player-btns">
-                <button class="player-btn" id="close-btn"><i class="fa-solid fa-xmark"></i></button>
-                <button class="player-btn" id="player-btn"><i class="fa-solid fa-play" id="icon-btn"></i></button>
-                <div class="volume-section">
-                    <button class="player-btn volume-btn" id="volume-btn"><i class="fa-solid fa-volume-high"
-                            id="volume-icon"></i></button>
-                    <input type="range" min="0" max="100" value="50" class="slider slider__volume" id="slider">
-                </div>
+        <div class="player-btns">
+            <button class="player-btn" id="close-btn"><i class="fa-solid fa-xmark"></i></button>
+            <button class="player-btn" id="player-btn"><i class="fa-solid fa-play" id="icon-btn"></i></button>
+            <div class="volume-section">
+                <button class="player-btn volume-btn" id="volume-btn"><i class="fa-solid fa-volume-high"
+                        id="volume-icon"></i></button>
+                <input type="range" min="0" max="100" value="50" class="slider slider__volume" id="slider">
             </div>
         </div>
+    </div>
+    </div>
+    <section class="main" id="main">
+        <div class="anchor">
+            <h2>Can't find Yours fav OP? <a href="addOp.html" class="nav__item">add one!</a></h2>
         </div>
-        <section class="main" id="main">
-            <div class="anchor">
-                <h2>Can't find Yours fav OP? <a href="addOp.html" class="nav__item">add one!</a></h2>
-            </div>
-            <div class="main__tiles">
-            </div>
-        </section>
-    </main>
+        <div class="main__tiles">
+        </div>
+    </section>
     <script type="module" src="js/firebase.js"></script>
     <script src="js/events.js"></script>
     <script type="module" src="js/search.js"></script>

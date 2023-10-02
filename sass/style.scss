@@ -154,7 +154,6 @@ table {
 		width: 100%;
 		height: 300px;
 		right: 0;
-		top: 100%;
 		overflow: hidden;
 		overflow-y: auto;
 		border-radius: 20px;
@@ -326,7 +325,7 @@ table {
 		flex-wrap: wrap;
 		margin-top: 300px;
 		max-width: 75%;
-		left: 12.5%;
+		gap: 2rem;
 	}
 	&__tile-info {
 		display: flex;
@@ -341,22 +340,54 @@ table {
 		pointer-events: none;
 		z-index: 1000;
 	}
-	&__nameDiv {
-		opacity: 0;
-		position: absolute;
-		width: 189px;
-		height: 80px;
-		border-radius: 10px;
-		top: 20%;
-		right: 50%;
-		transform: translate(50%, -50%);
-		z-index: -9;
-		transition: 0.3s;
-		background-color: c.$name-color;
-		-webkit-box-shadow: 1px 1px 32px 0px rgba(250, 152, 5, 1);
-		-moz-box-shadow: 1px 1px 32px 0px rgba(250, 152, 5, 1);
-		box-shadow: 1px 1px 32px 0px rgba(250, 152, 5, 1);
-	}
+}
+.card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: auto;
+	height: 500px; /* Dodaj stałą wysokość */
+	border-radius: 20px;
+	overflow: hidden;
+	border: 1px solid c.$logo-color;
+	padding: 2rem;
+	color: #fff;
+	cursor: pointer;
+	gap: 2rem;
+	transition: all 0.3s;
+}
+.card img {
+	border-radius: 20px;
+	width: 225px;
+	height: 333px;
+}
+.card:hover {
+	-webkit-box-shadow: 0px 0px 24px 0px rgba(250, 152, 5, 1);
+	-moz-box-shadow: 0px 0px 24px 0px rgba(250, 152, 5, 1);
+	box-shadow: 0px 0px 24px 0px rgba(250, 152, 5, 1);
+}
+.anime-title {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
+}
+.anime-title:hover {
+	text-overflow: unset;
+	white-space: normal;
+}
+.opening-title {
+	font-size: 1.7rem;
+	font-weight: 700;
+}
+.author {
+	font-size: 1.3rem;
+}
+.buttons i {
+	font-size: 2rem;
+	margin: 0rem 1rem;
 }
 
 .h3center {
@@ -383,16 +414,12 @@ table {
 	z-index: 9999;
 	pointer-events: none;
 }
+
 .player-bcg-container {
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-.player-container {
-	position: absolute;
-	width: 100%;
-	height: 100%;
 }
 .player-background {
 	position: fixed;
@@ -420,9 +447,7 @@ table {
 	width: 100%;
 	height: 100%;
 }
-.player-show {
-	display: block;
-}
+
 .player-btns {
 	position: relative;
 	width: 100%;
@@ -723,11 +748,15 @@ input:not(:placeholder-shown) ~ label {
 		display: none;
 	}
 	.player {
-		height: 50%;
-	}
-	.player {
+		top: 40%;
 		width: 100%;
-		height: 60%;
+		height: 30%;
+	}
+	.player-background {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 1500px;
 	}
 }
 

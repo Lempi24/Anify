@@ -7,9 +7,6 @@ const iconBtn = document.querySelector('#icon-btn');
 const stateBtn = document.querySelector('#player-btn');
 const playerControlls = document.querySelector('#player-controlls');
 const closeBtn = document.querySelector('#close-btn');
-const playerBgcContainerElement = document.querySelector(
-	'#player-bcg-container'
-);
 let slider = document.querySelector('#slider');
 let volume = 50;
 let prevVolume = 50;
@@ -42,8 +39,8 @@ burgerMenu.addEventListener('click', () => {
 
 function onYouTubeIframeAPIReady(opening) {
 	player = new YT.Player('player', {
-		height: '360',
-		width: '640',
+		height: '720',
+		width: '1280',
 		videoId: `${opening.Video}`,
 		events: {
 			onReady: onPlayerReady,
@@ -73,30 +70,25 @@ function onYouTubeIframeAPIReady(opening) {
 function mute() {
 	player2.setVolume(0);
 }
-function showAnimeName(opening) {
-	const tileId = document.getElementById(`${opening.Id}`);
-	tileId.classList.toggle('test');
-}
+
 function hideAnimeName(opening) {
 	const tileId = document.getElementById(`${opening.Id}`);
 	tileId.classList.toggle('test');
 }
 function togglePlayerActive() {
 	playerControlls.classList.toggle('player__notactive');
-	main.style.display = 'none';
+	main.style.pointerEvents = 'none';
 	body.style.overflow = 'hidden';
 	searchClickElement.style.pointerEvents = 'none';
-	playerBgcContainerElement.classList.toggle('center');
-	playerToShow.classList.toggle('player-show');
 }
 function createTimeStamp() {
 	//slider
-	timeStampSlider.max = `${player.getDuration()}`;
+	timeStampSlider.max = `${player.getDuration() - 1}`;
 	currentTimeElement.textContent = '00:00';
 	currentTime = '00:00';
 	//full time
 	const minutes = Math.floor(player.getDuration() / 60);
-	const seconds = player.getDuration() - minutes * 60;
+	const seconds = player.getDuration() - 1 - minutes * 60;
 	fullTimeH3.textContent = `${String(minutes).padStart(2, '0')}:${String(
 		seconds
 	).padStart(2, '0')}`;
@@ -149,20 +141,16 @@ closeBtn.addEventListener('click', () => {
 	if (player && typeof player.destroy === 'function') {
 		const resetSlider = '<div id="time-slider"></div>';
 		timeStampSlider.innerHTML = resetSlider;
-		main.style.display = 'flex';
+		main.style.pointerEvents = 'auto';
 		for (let i = 0; i < playersArray.length; i++) {
 			playersArray[i].destroy();
 		}
 	}
 	iconBtn.className = 'fa-solid fa-play';
 	playerControlls.classList.toggle('player__notactive');
-	playerBgcContainerElement.classList.toggle('center');
 	playerToShow.classList.toggle('player-show');
 	body.style.overflowY = 'scroll';
 	searchClickElement.style.pointerEvents = 'auto';
-	const resetBackground =
-		"<div class='player-background main__active' id='player-background'></div><div class='player'id='player'></div>";
-	playerBgcContainerElement.innerHTML = resetBackground;
 	playersArray = [];
 	clearInterval(intervalId);
 	intervalId = null;
@@ -207,15 +195,14 @@ function skipTime() {
 	}
 }
 timeStampSlider.oninput = skipTime;
-playerBgcContainerElement.addEventListener('click', () => {});
 function synchronizeBackgroundVideo() {
 	const mainPlayerTime = player.getCurrentTime();
 	const backgroundPlayerTime = player2.getCurrentTime();
-	const mainPlayerTimeRounded = Math.round(mainPlayerTime * 100); // Przelicz na setne sekundy
-	const backgroundPlayerTimeRounded = Math.round(backgroundPlayerTime * 100); // Przelicz na setne sekundy
+	const mainPlayerTimeRounded = Math.round(mainPlayerTime * 100);
+	const backgroundPlayerTimeRounded = Math.round(backgroundPlayerTime * 100);
 	console.log(mainPlayerTimeRounded + ',' + backgroundPlayerTimeRounded);
 	if (mainPlayerTimeRounded !== backgroundPlayerTimeRounded) {
-		const seekTimeInSeconds = mainPlayerTimeRounded / 100; // Przelicz z powrotem na sekundy
+		const seekTimeInSeconds = mainPlayerTimeRounded / 100;
 		player2.seekTo(seekTimeInSeconds);
 	}
 }
