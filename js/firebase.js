@@ -1,12 +1,23 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js';
 import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	onAuthStateChanged,
+	signOut,
+} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
+import {
 	getDatabase,
 	get,
-	update,
-	ref,
+	ref as databaseRef,
 	child,
-	onValue,
 } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js';
+import {
+	getStorage,
+	uploadBytes,
+	ref as storageRef,
+	getDownloadURL,
+} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js';
 const firebaseConfig = {
 	apiKey: 'AIzaSyDENO0IP6mXoH-R9N7xDUexVrDyqbQc0nA',
 	authDomain: 'anify-107a5.firebaseapp.com',
@@ -21,13 +32,125 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 
-const dbref = ref(db);
+const dbref = databaseRef(db);
 const parent = document.querySelector('.main__tiles');
 
-get(child(dbref, 'Openings/'))
-	.then((snapshot) => {
-		snapshot.forEach((childSnapshot) => {
-			const opening = childSnapshot.val();
+const auth = getAuth(app);
+
+let namesArray = [];
+let cardElements = [];
+let barElement;
+let clickableElement;
+let clickableH2;
+let cardHolder;
+let cardElement;
+
+get(child(dbref, 'Openings/')).then((snapshot) => {
+	snapshot.forEach((childSnapshot) => {
+		const opening = childSnapshot.val();
+		const openingName = opening.Name.replace(/ /g, '_');
+
+		if (!namesArray.includes(openingName)) {
+			namesArray.push(openingName);
+
+			barElement = document.createElement('div');
+			barElement.classList.add('bar');
+			barElement.id = openingName;
+
+			clickableElement = document.createElement('div');
+			clickableElement.classList.add('clickable-bar');
+
+			clickableH2 = document.createElement('h2');
+			clickableH2.textContent = opening.Name;
+
+			cardHolder = document.createElement('div');
+			cardHolder.classList.add('card-holder');
+			cardHolder.classList.add('card-hidden');
+
+			clickableElement.appendChild(clickableH2);
+			barElement.appendChild(clickableElement);
+			barElement.appendChild(cardHolder);
+			parent.appendChild(barElement);
+			clickableElement.addEventListener(
+				'click',
+				(function (element) {
+					return function () {
+						const siblings = Array.from(element.parentElement.children);
+
+						siblings.forEach((sibling) => {
+							if (sibling !== element) {
+								sibling.classList.toggle('card-hidden');
+							}
+						});
+					};
+				})(clickableElement)
+			);
+		}
+
+		const barElements = Array.from(document.querySelectorAll('.bar'));
+		barElements.forEach((bar) => {
+			if (bar.id === openingName) {
+				cardElement = document.createElement('div');
+				cardElement.classList.add('card');
+				cardElement.id = 'card';
+
+				const imageContainer = document.createElement('div');
+				imageContainer.classList.add('image-container');
+
+				const imageElement = document.createElement('img');
+				imageElement.src = opening.Image;
+
+				const infoContainer = document.createElement('div');
+				infoContainer.classList.add('info');
+
+				const h2Element = document.createElement('h2');
+				h2Element.classList.add('anime-title');
+				h2Element.textContent = opening.Name;
+
+				const openingTitleElement = document.createElement('p');
+				openingTitleElement.classList.add('opening-title');
+				openingTitleElement.textContent = opening.Title;
+
+				const authorElement = document.createElement('p');
+				authorElement.classList.add('author');
+				authorElement.textContent = opening.Author;
+
+				const buttonsElement = document.createElement('div');
+				buttonsElement.classList.add('buttons');
+
+				const angleLeft = document.createElement('i');
+				angleLeft.classList.add('fa-solid');
+				angleLeft.classList.add('fa-angle-left');
+				const circlePlay = document.createElement('i');
+				circlePlay.classList.add('fa-regular');
+				circlePlay.classList.add('fa-circle-play');
+				const angleRight = document.createElement('i');
+				angleRight.classList.add('fa-solid');
+				angleRight.classList.add('fa-angle-right');
+
+				imageContainer.appendChild(imageElement);
+				infoContainer.appendChild(h2Element);
+				infoContainer.appendChild(openingTitleElement);
+				infoContainer.appendChild(authorElement);
+
+				buttonsElement.appendChild(angleLeft);
+				buttonsElement.appendChild(circlePlay);
+				buttonsElement.appendChild(angleRight);
+
+				cardElement.appendChild(imageContainer);
+				cardElement.appendChild(infoContainer);
+				cardElement.appendChild(buttonsElement);
+
+				cardHolder.appendChild(cardElement);
+
+				cardElement.addEventListener('click', () => {
+					onYouTubeIframeAPIReady(opening);
+					togglePlayerActive();
+				});
+			}
+		});
+		/*
+			
 
 			const cardElement = document.createElement('div');
 			cardElement.classList.add('card');
@@ -86,11 +209,13 @@ get(child(dbref, 'Openings/'))
 				onYouTubeIframeAPIReady(opening);
 				togglePlayerActive();
 			});
-		});
-	})
-	.catch((error) => {
+			*/
+	});
+});
+/*.catch((error) => {
 		alert(error);
 	});
+	*/
 
 export function clearResults(resultsArea) {
 	resultsArea.replaceChildren();
@@ -138,3 +263,32 @@ export function performSearch(searchInput, resultsArea) {
 			console.error('Error fetching data:', error);
 		});
 }
+console.log(namesArray);
+//listening for auth changes
+const loggedInElements = document.querySelectorAll('.logged-in');
+const loggedOutElements = document.querySelectorAll('.logged-out');
+const avatarImage = document.querySelector('#avatar-image');
+onAuthStateChanged(auth, (user) => {
+	if (user) {
+		loggedInElements.forEach((element) => element.classList.add('hidden')); //.classList.add('hidden');
+		loggedOutElements.forEach((element) => element.classList.remove('hidden')); //.classList.remove('hidden');
+		console.log(user);
+		avatarImage.src = user.photoURL;
+	} else {
+		loggedInElements.forEach((element) => element.classList.remove('hidden')); //.classList.remove('hidden');
+		loggedOutElements.forEach((element) => element.classList.add('hidden')); //.classList.add('hidden');
+	}
+});
+//sign Out
+const test = document.querySelectorAll('.logOut');
+test.forEach((logOutElement) => {
+	logOutElement.addEventListener('click', () => {
+		signOut(auth);
+	});
+});
+//show and close menu
+const avatar = document.querySelector('#avatar');
+const userList = document.querySelector('#user-list');
+avatar.addEventListener('click', () => {
+	userList.classList.toggle('user-list-vissible');
+});

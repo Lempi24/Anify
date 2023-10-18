@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <script src="https://kit.fontawesome.com/89d0a0b474.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="Img/Icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Anify</title>
+</head>
+
+<body>
+    <div class="header__hero-img">
+        <form class="login-form" id="login">
+            <h2>Log in</h2>
+            <div class="input-container">
+                <input type="text" id="user-email-login" class="form__input" placeholder=" ">
+                <label for="user-email-login">Email</label>
+            </div>
+            <div class="input-container">
+                <input type="password" id="user-password-login" class="form__input" placeholder=" ">
+                <label for="user-password-login">Password</label>
+            </div>
+            <input type="submit" class="submitBtn" value="Log In">
+            <p class="form-paragraph">Don't have an account? <strong id="form-change-btn-login">Register Now</strong>
+            </p>
+        </form>
+        <div class="register-success" id="register-success">
+            <p>Register succesful! Now You can Log In</p>
+        </div>
+        <form class="login-form hidden" id="register">
+            <h2>Register</h2>
+            <div class="input-container">
+                <input type="text" id="user-email-register" class="form__input" placeholder=" ">
+                <label for="user-email-register">Email</label>
+            </div>
+            <div class="input-container">
+                <input type="password" id="user-password-register" class="form__input" placeholder=" ">
+                <label for="user-password-register">Password</label>
+            </div>
+            <input type="submit" class="submitBtn" value="Register" id="registerBtn">
+            <p class="form-paragraph">Have an account? <strong id="form-change-btn-register">Log In now</strong></p>
+        </form>
+
+        <div class="header__hero-shadow"></div>
+
+        <script src="js/auth.js" type="module"></script>
+</body>
+
+</html>

@@ -6,9 +6,6 @@ const mobileSearchInput = document.querySelector('#mysearch2');
 const clear = document.querySelector('#nav__clear');
 const resultsArea = document.querySelector('#nav__searchResult');
 const mobileResultsArea = document.querySelector('#nav__searchResult2');
-icon.onclick = function () {
-	search.classList.toggle('active');
-};
 searchInput.addEventListener('input', () => {
 	performSearch(searchInput, resultsArea);
 });

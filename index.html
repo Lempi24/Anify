@@ -26,27 +26,35 @@
             <div class="burger-menu" id="burger-menu">
                 <div class=" burger-bars"></div>
             </div>
-            <div class="nav__list">
-                <a href="" class="nav__item">Log in</a>
-                <div class="nav__search">
-                    <div class="nav__icon">
-                        <i class="fa-solid fa-magnifying-glass fa-2xl"></i>
-                    </div>
-                    <div class="nav__input" id="nav__input">
-                        <input type="text" placeholder="Search" id="mysearch" class="mysearch">
-                    </div>
-                    <span class="nav__clear" id="nav__clear" onclick="document.getElementById('mysearch').value = '' ">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </span>
-                    <div class="nav__searchResult" id="nav__searchResult"></div>
-                </div>
-
+            <div class="nav__searchWrapper">
+                <input type="text" placeholder="Search..." id="mysearch" class="text-input">
+                <div class="nav__searchResult" id="nav__searchResult"></div>
+            </div>
+            <div class="nav-buttons nav-desktop">
+                <a class="menu-btn logged-in" href="login.html" id="logIn">Log in</a>
+                <a class="menu-btn logged-out avatar hidden" id="avatar"><img src="" alt="User's avatar"
+                        id="avatar-image"></a>
+                <ul id="user-list" class="user-list">
+                    <li class="list-item"><a class="menu-btn logged-out logOut" id="logOut">Log out</a></li>
+                    <li class="list-item"><a class="menu-btn logged-out" href="settings.html">Setting</a></li>
+                </ul>
             </div>
         </nav>
         <div class="header__hero-img">
-
             <div class="mobile-nav" id="mobile-nav">
-                <div class="nav__search mobile">
+                <div class="nav-items">
+                    <div class="mobile-nav-search-wrapper">
+                        <input type="text" placeholder="Search" id="mysearch2" class="text-input mobile-search">
+                        <div class="nav__searchResult mobile-search-result" id="nav__searchResult2"></div>
+                    </div>
+                    <div class="nav-buttons">
+                        <a class="menu-btn logged-in" href="login.html">Log in</a>
+                        <a class="menu-btn logged-out logOut" id="logOut">Log out</a>
+                        <a class="menu-btn logged-out" href="settings.html">Setting</a>
+                        <a class="menu-btn" href="addOp.html">Add Op</a>
+                    </div>
+                </div>
+                <!--<div class="nav__search mobile">
                     <div class="nav__icon">
                         <i class="fa-solid fa-magnifying-glass fa-2xl"></i>
                     </div>
@@ -58,6 +66,7 @@
                     </span>
                 </div>
                 <div class="nav__searchResult" id="nav__searchResult2"></div>
+                -->
             </div>
             <div class="header__hero-shadow">
                 <div class="header__hero-text">

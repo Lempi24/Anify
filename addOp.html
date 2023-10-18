@@ -16,13 +16,25 @@
 <body>
     <header class="header" id="header">
         <nav class="nav">
-            <div class="nav__logo spacing">
+            <div class="nav__logo">
                 <a href="#main"><img src="Img/AnifyLogo.png" alt="Okrągłe logo 'Anify' na pomarańczowym tle"></a>
-                <h2><a href="index.html" class="nav__item">Home</a></h2>
+            </div>
+            <div class="burger-menu" id="burger-menu">
+                <div class="burger-bars"></div>
+            </div>
+            <div class="nav-buttons nav-desktop">
+                <a class="menu-btn" href="index.html">Home</a>
             </div>
             </div>
         </nav>
         <div class="header__hero-img">
+            <div class="mobile-nav" id="mobile-nav">
+                <div class="nav-items">
+                    <div class="nav-buttons">
+                        <a class="menu-btn" href="index.html">Home</a>
+                    </div>
+                </div>
+            </div>
             <div class="header__hero-shadow">
                 <div class="form-container">
                     <div class="form-img"></div>
@@ -46,8 +58,9 @@
                     </form>
                 </div>
             </div>
-        </div>
+
     </header>
+    <script src="js/events.js"></script>
     <script type="module" src="js/form.js"></script>
 </body>
 

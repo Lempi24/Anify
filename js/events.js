@@ -39,11 +39,12 @@ burgerMenu.addEventListener('click', () => {
 
 function onYouTubeIframeAPIReady(opening) {
 	player = new YT.Player('player', {
-		height: '720',
-		width: '1280',
+		height: '1080',
+		width: '1920',
 		videoId: `${opening.Video}`,
 		events: {
 			onReady: onPlayerReady,
+			onStateChange: onPlayerStateChange,
 		},
 		playerVars: {
 			controls: '0',
@@ -53,11 +54,12 @@ function onYouTubeIframeAPIReady(opening) {
 	});
 	playersArray.push(player);
 	player2 = new YT.Player('player-background', {
-		height: '360',
-		width: '640',
+		height: '144',
+		width: '192',
 		videoId: `${opening.Video}`,
 		events: {
 			onReady: mute,
+			onStateChange: onPlayerStateChange,
 		},
 		playerVars: {
 			controls: '0',
@@ -116,20 +118,21 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 stateBtn.addEventListener('click', () => {
 	const playerState = player.getPlayerState();
-	if (!intervalId) {
-		intervalId = setInterval(synchronizeBackgroundVideo, 1000);
-	}
-	if (playerState == YT.PlayerState.CUED) {
+	const playerBackgroundState = player2.getPlayerState();
+	if (
+		playerState === YT.PlayerState.CUED &&
+		playerBackgroundState === YT.PlayerState.CUED
+	) {
 		for (let i = 0; i < playersArray.length; i++) {
 			playersArray[i].playVideo();
 		}
 		iconBtn.className = 'fa-solid fa-pause';
-	} else if (playerState == YT.PlayerState.PLAYING) {
+	} else if (playerState === YT.PlayerState.PLAYING) {
 		for (let i = 0; i < playersArray.length; i++) {
 			playersArray[i].pauseVideo();
 		}
 		iconBtn.className = 'fa-solid fa-play';
-	} else if (playerState == YT.PlayerState.PAUSED) {
+	} else if (playerState === YT.PlayerState.PAUSED) {
 		for (let i = 0; i < playersArray.length; i++) {
 			playersArray[i].playVideo();
 		}
@@ -195,14 +198,24 @@ function skipTime() {
 	}
 }
 timeStampSlider.oninput = skipTime;
-function synchronizeBackgroundVideo() {
-	const mainPlayerTime = player.getCurrentTime();
-	const backgroundPlayerTime = player2.getCurrentTime();
-	const mainPlayerTimeRounded = Math.round(mainPlayerTime * 100);
-	const backgroundPlayerTimeRounded = Math.round(backgroundPlayerTime * 100);
-	console.log(mainPlayerTimeRounded + ',' + backgroundPlayerTimeRounded);
-	if (mainPlayerTimeRounded !== backgroundPlayerTimeRounded) {
-		const seekTimeInSeconds = mainPlayerTimeRounded / 100;
-		player2.seekTo(seekTimeInSeconds);
+function onPlayerStateChange(event) {
+	const mainPlayer = player;
+	const backgroundPlayer = player2;
+	console.log('zmiana stanu');
+	const mainPlayerTime = mainPlayer.getCurrentTime();
+	const backgroundPlayerTime = backgroundPlayer.getCurrentTime();
+	const errorMargin = 0.1;
+
+	if (Math.abs(mainPlayerTime - backgroundPlayerTime) > errorMargin) {
+		console.log(Math.abs(mainPlayerTime - backgroundPlayerTime));
+		backgroundPlayer.seekTo(mainPlayerTime);
 	}
+
+	/*if (player2.getPlayerState() === 3) {
+		player.pauseVideo();
+	} else if (player2.getPlayerState() === 1) {
+		player.playVideo();
+	}
+	*/
 }
+

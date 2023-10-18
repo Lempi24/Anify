@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <script src="https://kit.fontawesome.com/89d0a0b474.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="Img/Icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Anify</title>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <a href="#main"><img src="Img/AnifyLogo.png" alt="Okrągłe logo 'Anify' na pomarańczowym tle"></a>
+            </div>
+            <div class="burger-menu" id="burger-menu">
+                <div class="burger-bars"></div>
+            </div>
+            <div class="nav-buttons nav-desktop">
+                <a class="menu-btn" href="index.html">Home</a>
+            </div>
+            </div>
+        </nav>
+        <div class="header__hero-img">
+            <div class="mobile-nav" id="mobile-nav">
+                <div class="nav-items">
+                    <div class="nav-buttons">
+                        <a class="menu-btn" href="index.html">Home</a>
+                    </div>
+                </div>
+            </div>
+            <div class="header__hero-shadow">
+                <div class="header__hero-img">
+                    <div class="header__hero-shadow">
+                        <div class="user-panel">
+                            <div class="user-avatar">
+                                <input type="file" id="avatar-input" accept="image/*" class="hidden">
+                                <label for="avatar-input"><i class="fa-regular fa-pen-to-square edit-icon"></i></label>
+                                <img src="" alt="" class="settings-avatar" id="avatar-image">
+                            </div>
+                            <div class="user-info">
+                                <p class="user-email">
+                                    Current email
+                                </p>
+                                <div class="edit-current-data">
+                                    <h2 id="current-email"></h2>
+                                    <p class="edit-current-p" id="edit-current-p">
+                                        Edit
+                                    </p>
+                                </div>
+                                <form class="change-email-form change-dissabled" id="change-email-form">
+                                    <div class="input-container">
+                                        <input type="text" id="user-changed-email" class="form__input" placeholder=" ">
+                                        <label for="user-changed-email">Email</label>
+                                    </div>
+                                    <input class="submitBtn" value="Confirm" type="submit"
+                                        id="change-data-submit"></input>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </header>
+    <script src="js/events.js"></script>
+    <script src="js/settings.js" type="module"></script>
+</body>
+
+</html>
