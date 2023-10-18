@@ -223,7 +223,6 @@ table {
 }
 
 .nav-buttons {
-  margin-right: 5rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -305,6 +304,7 @@ table {
 }
 
 .nav-desktop {
+  margin-right: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
