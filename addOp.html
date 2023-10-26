@@ -19,10 +19,10 @@
             <div class="nav__logo">
                 <a href="#main"><img src="Img/AnifyLogo.png" alt="Okrągłe logo 'Anify' na pomarańczowym tle"></a>
             </div>
-            <div class="burger-menu" id="burger-menu">
+            <div class="burger-menu menu" id="burger-menu">
                 <div class="burger-bars"></div>
             </div>
-            <div class="nav-buttons nav-desktop">
+            <div class="nav-buttons nav-desktop menu">
                 <a class="menu-btn" href="index.html">Home</a>
             </div>
             </div>
@@ -36,6 +36,12 @@
                 </div>
             </div>
             <div class="header__hero-shadow">
+                <div class="register-success" id="register-success">
+                    <p>Sent!</p>
+                </div>
+                <div class="register-fail" id="register-fail">
+                    <p id="fail-paragraph">Please fill in all inputs</p>
+                </div>
                 <div class="form-container">
                     <div class="form-img"></div>
                     <form class="form" id="form">
@@ -54,13 +60,13 @@
                             <input type="text" id="Title" class="form__input" placeholder=" ">
                             <label for="Title">Opening title</label>
                         </div>
-                        <input type="submit" class="submitBtn" value="Submit">
+                        <input type="submit" class="submitBtn" value="Submit" id="submitBtn">
                     </form>
                 </div>
             </div>
 
     </header>
-    <script src="js/events.js"></script>
+    <script src=" js/events.js"></script>
     <script type="module" src="js/form.js"></script>
 </body>
 

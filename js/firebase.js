@@ -220,41 +220,42 @@ get(child(dbref, 'Openings/')).then((snapshot) => {
 export function clearResults(resultsArea) {
 	resultsArea.replaceChildren();
 }
-let savedData = new Set();
+let savedData = [];
 export function performSearch(searchInput, resultsArea) {
-	savedData.clear();
+	savedData = [];
 	resultsArea.replaceChildren();
 	get(child(dbref, 'Openings/'))
 		.then((snapshot) => {
 			snapshot.forEach((childSnapshot) => {
 				const opening = childSnapshot.val();
+				const openingName = opening.Name.replace(/ /g, '_');
 				const name = opening.Name.toUpperCase();
 				const searchValue = searchInput.value.toUpperCase();
 				if (!searchValue) {
 					resultTile.replaceChildren();
 				} else {
-					if (!savedData.has(name)) {
+					if (!savedData.includes(name)) {
 						if (name.includes(searchValue)) {
-							const resultTile = document.createElement('div');
+							const resultTile = document.createElement('a');
+							resultTile.href = '#' + openingName;
 							resultTile.classList.add('nav__resultTile');
 
 							const tileName = document.createElement('h2');
 							tileName.classList.add('nav__resultTileh2');
 							tileName.textContent = name;
 
-							const imgElement = document.createElement('img');
-							imgElement.src = opening.Image;
-
 							resultsArea.appendChild(resultTile);
-							resultTile.appendChild(imgElement);
 							resultTile.appendChild(tileName);
 
 							resultTile.addEventListener('click', () => {
-								onYouTubeIframeAPIReady(opening);
-								togglePlayerActive();
+								const parentElement = document.querySelector(`#${openingName}`);
+
+								const children = parentElement.children;
+								const lastChild = children[children.length - 1];
+								lastChild.classList.toggle('card-hidden');
 							});
 						}
-						savedData.add(name);
+						savedData.push(name);
 					}
 				}
 			});

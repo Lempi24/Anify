@@ -29,12 +29,15 @@
                 <input type="password" id="user-password-login" class="form__input" placeholder=" ">
                 <label for="user-password-login">Password</label>
             </div>
-            <input type="submit" class="submitBtn" value="Log In">
+            <input type="submit" class="submitBtn" value="Log In" id="loginBtn">
             <p class="form-paragraph">Don't have an account? <strong id="form-change-btn-login">Register Now</strong>
             </p>
         </form>
         <div class="register-success" id="register-success">
             <p>Register succesful! Now You can Log In</p>
+        </div>
+        <div class="register-fail" id="register-fail">
+            <p id="fail-paragraph"></p>
         </div>
         <form class="login-form hidden" id="register">
             <h2>Register</h2>
@@ -46,6 +49,10 @@
                 <input type="password" id="user-password-register" class="form__input" placeholder=" ">
                 <label for="user-password-register">Password</label>
             </div>
+            <div class="input-container">
+                <input type="text" id="user-nickname-register" class="form__input" placeholder=" " maxlength="10">
+                <label for="user-nickname-register">Nickname (max 10 characters)</label>
+            </div>
             <input type="submit" class="submitBtn" value="Register" id="registerBtn">
             <p class="form-paragraph">Have an account? <strong id="form-change-btn-register">Log In now</strong></p>
         </form>
@@ -54,5 +61,3 @@
 
         <script src="js/auth.js" type="module"></script>
 </body>
-
-</html>

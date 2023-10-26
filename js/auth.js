@@ -5,6 +5,16 @@ import {
 	signInWithEmailAndPassword,
 	updateProfile,
 } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
+import {
+	getDatabase,
+	get,
+	set,
+	update,
+	remove,
+	ref,
+	child,
+	onValue,
+} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js';
 const firebaseConfig = {
 	apiKey: 'AIzaSyDENO0IP6mXoH-R9N7xDUexVrDyqbQc0nA',
 	authDomain: 'anify-107a5.firebaseapp.com',
@@ -15,8 +25,142 @@ const firebaseConfig = {
 	appId: '1:494208062786:web:04e804d7716d22325124db',
 	measurementId: 'G-6KZ2XCZ0QB',
 };
+function getFirebaseAuthErrorMessage(errorCode) {
+	const errorMapping = {
+		'auth/admin-restricted-operation':
+			'This operation is restricted to administrators.',
+		'auth/argument-error': 'Invalid arguments provided.',
+		'auth/app-not-authorized': 'This app is not authorized to use Firebase.',
+		'auth/app-not-installed': 'This app is not installed on your device.',
+		'auth/captcha-check-failed': 'Google reCAPTCHA check failed.',
+		'auth/code-expired': 'The provided code has expired.',
+		'auth/cordova-not-ready': 'Cordova is not ready.',
+		'auth/cors-unsupported': 'CORS is not supported by your browser.',
+		'auth/credential-already-in-use':
+			'This credential is already associated with another account.',
+		'auth/custom-token-mismatch': 'The custom token and API key do not match.',
+		'auth/requires-recent-login':
+			'Please login again, as your last login was too long ago.',
+		'auth/dependent-sdk-initialized-before-auth':
+			'Please initialize the Firebase Auth SDK before other dependent SDKs.',
+		'auth/dynamic-link-not-activated': 'Dynamic links are not activated.',
+		'auth/email-change-needs-verification':
+			'Please verify your new email address.',
+		'auth/email-already-in-use': 'The email address is already in use.',
+		'auth/emulator-config-failed': 'Emulator configuration failed.',
+		'auth/expired-action-code': 'The action code has expired.',
+		'auth/cancelled-popup-request': 'The popup request has been cancelled.',
+		'auth/internal-error': 'An internal error has occurred.',
+		'auth/invalid-api-key': 'The provided API key is invalid.',
+		'auth/invalid-app-credential': 'The app credential is invalid.',
+		'auth/invalid-app-id': 'The app ID is invalid.',
+		'auth/invalid-user-token': 'Invalid user token.',
+		'auth/invalid-auth-event': 'Invalid authentication event.',
+		'auth/invalid-cert-hash': 'Invalid certificate hash.',
+		'auth/invalid-verification-code':
+			'The provided verification code is invalid.',
+		'auth/invalid-continue-uri': 'The continue URL is invalid.',
+		'auth/invalid-cordova-configuration': 'Invalid Cordova configuration.',
+		'auth/invalid-custom-token': 'The custom token is invalid.',
+		'auth/invalid-dynamic-link-domain': 'The dynamic link domain is invalid.',
+		'auth/invalid-email': 'Invalid email address.',
+		'auth/invalid-emulator-scheme': 'Invalid emulator scheme.',
+		'auth/invalid-credential': 'Invalid Identity Provider response.',
+		'auth/invalid-message-payload': 'Invalid message payload.',
+		'auth/invalid-multi-factor-session':
+			'Invalid multi-factor authentication session.',
+		'auth/invalid-oauth-client-id': 'Invalid OAuth client ID.',
+		'auth/invalid-oauth-provider': 'Invalid OAuth provider.',
+		'auth/invalid-action-code': 'The reset password action code is invalid.',
+		'auth/unauthorized-domain': 'Unauthorized domain.',
+		'auth/wrong-password': 'Incorrect password.',
+		'auth/invalid-persistence-type': 'Invalid persistence type.',
+		'auth/invalid-phone-number': 'Invalid phone number.',
+		'auth/invalid-provider-id': 'Invalid provider ID.',
+		'auth/invalid-recipient-email': 'Invalid recipient email.',
+		'auth/invalid-sender': 'Invalid sender.',
+		'auth/invalid-verification-id': 'Invalid verification ID.',
+		'auth/invalid-tenant-id': 'Invalid tenant ID.',
+		'auth/multi-factor-info-not-found':
+			'Multi-factor authentication information not found.',
+		'auth/multi-factor-auth-required':
+			'Multi-factor authentication is required.',
+		'auth/missing-android-pkg-name': 'Missing Android package name.',
+		'auth/missing-app-credential': 'Missing app credential.',
+		'auth/auth-domain-config-required':
+			'Missing authentication domain configuration.',
+		'auth/missing-verification-code': 'Missing verification code.',
+		'auth/missing-continue-uri': 'Missing continue URL.',
+		'auth/missing-iframe-start': 'Missing iframe start.',
+		'auth/missing-ios-bundle-id': 'Missing iOS bundle ID.',
+		'auth/missing-or-invalid-nonce': 'Missing or invalid nonce.',
+		'auth/missing-multi-factor-info':
+			'Missing multi-factor authentication information.',
+		'auth/missing-multi-factor-session':
+			'Missing multi-factor authentication session.',
+		'auth/missing-phone-number': 'Missing phone number.',
+		'auth/missing-verification-id': 'Missing verification ID.',
+		'auth/app-deleted': 'The authentication module has been deleted.',
+		'auth/account-exists-with-different-credential':
+			'An account with this email already exists with a different credential.',
+		'auth/network-request-failed': 'A network request has failed.',
+		'auth/null-user': 'No user is currently signed in.',
+		'auth/no-auth-event': 'No authentication event.',
+		'auth/no-such-provider': 'No such Identity Provider.',
+		'auth/operation-not-allowed': 'This operation is not allowed.',
+		'auth/operation-not-supported-in-this-environment':
+			'This operation is not supported in your current environment.',
+		'auth/popup-blocked': 'Popup blocked by the browser.',
+		'auth/popup-closed-by-user': 'Popup closed by user.',
+		'auth/provider-already-linked':
+			'This provider is already linked to your account.',
+		'auth/quota-exceeded': 'Quota exceeded.',
+		'auth/redirect-cancelled-by-user': 'Redirect cancelled by user.',
+		'auth/redirect-operation-pending': 'Redirect operation is pending.',
+		'auth/rejected-credential': 'Rejected credential.',
+		'auth/second-factor-already-in-use':
+			'Second factor authentication method already in use.',
+		'auth/maximum-second-factor-count-exceeded':
+			'Maximum number of second factor methods exceeded.',
+		'auth/tenant-id-mismatch': 'Tenant ID mismatch.',
+		'auth/timeout': 'A timeout has occurred.',
+		'auth/user-token-expired': 'User token has expired.',
+		'auth/too-many-requests': 'Too many attempts. Please try again later.',
+		'auth/unauthorized-continue-uri': 'Unauthorized continue URL.',
+		'auth/unsupported-first-factor':
+			'Unsupported first factor authentication method.',
+		'auth/unsupported-persistence-type': 'Unsupported persistence type.',
+		'auth/unsupported-tenant-operation': 'Unsupported tenant operation.',
+		'auth/unverified-email': 'Unverified email address.',
+		'auth/user-cancelled': 'User cancelled authentication.',
+		'auth/user-not-found': 'User not found.',
+		'auth/user-disabled': 'User account is disabled.',
+		'auth/user-mismatch': 'User mismatch.',
+		'auth/user-signed-out': 'User has signed out.',
+		'auth/weak-password': 'The password is weak.',
+		'auth/web-storage-unsupported':
+			'Web storage is unsupported by your browser.',
+		'auth/already-initialized': 'Firebase Auth has already been initialized.',
+		'auth/recaptcha-not-enabled': 'Google reCAPTCHA is not enabled.',
+		'auth/missing-recaptcha-token': 'Missing Google reCAPTCHA token.',
+		'auth/invalid-recaptcha-token': 'Invalid Google reCAPTCHA token.',
+		'auth/invalid-recaptcha-action': 'Invalid Google reCAPTCHA action.',
+		'auth/missing-client-type': 'Missing client type.',
+		'auth/missing-recaptcha-version': 'Missing Google reCAPTCHA version.',
+		'auth/invalid-recaptcha-version': 'Invalid Google reCAPTCHA version.',
+		'auth/invalid-req-type': 'Invalid request type.',
+		'auth/invalid-login-credentials':
+			'Invalid login information, please try again',
+		'auth/missing-password': 'Please type in Your password',
+		'auth/missing-email': 'Please type in Your E-mail adress',
+		'auth/missing-nickname': 'Please type in Your nickname',
+	};
+	return errorMapping[errorCode];
+}
 
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const dbref = ref(db);
 const auth = getAuth(app);
 //form change
 const formChangeBtnLogin = document.getElementById('form-change-btn-login');
@@ -37,30 +181,61 @@ formChangeBtnRegister.addEventListener('click', () => {
 //user register
 const registerBtn = document.querySelector('#registerBtn');
 const registerForm = document.querySelector('#register');
+const registerSuccess = document.querySelector('#register-success');
+const registerFail = document.querySelector('#register-fail');
+const failParagraph = document.querySelector('#fail-paragraph');
 registerBtn.addEventListener('click', (e) => {
 	e.preventDefault();
 	const email = document.querySelector('#user-email-register').value;
 	const password = document.querySelector('#user-password-register').value;
-	const registerSuccess = document.querySelector('#register-success');
-	createUserWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			//const user = userCredential.user;
-			registerSuccess.classList.add('vissible');
-			registerForm.reset();
-			setTimeout(() => {
-				registerSuccess.classList.remove('vissible');
-			}, 3000);
-		})
-		.catch((error) => {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			console.log(`kod błędu: ${errorCode} \n błąd: ${errorMessage}`);
-		});
+	const registerNickname = document.querySelector(
+		'#user-nickname-register'
+	).value;
+
+	if (registerNickname) {
+		createUserWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				const user = userCredential.user;
+				updateProfile(user, {
+					displayName: registerNickname,
+				});
+				console.log(user);
+				registerSuccess.classList.add('vissible');
+				registerForm.reset();
+				setTimeout(() => {
+					registerSuccess.classList.remove('vissible');
+				}, 3000);
+				const usersRef = ref(db, 'Users/' + user.uid);
+				set(usersRef, {
+					email: user.email,
+					displayName: registerNickname,
+					quizPoints: 0,
+				});
+			})
+			.catch((error) => {
+				registerFail.classList.add('vissible');
+				const errorCode = error.code;
+				const errorMessage = getFirebaseAuthErrorMessage(errorCode);
+				failParagraph.innerHTML = errorMessage;
+				console.log(errorMessage, errorCode);
+				setTimeout(() => {
+					registerFail.classList.remove('vissible');
+				}, 3000);
+			});
+	} else {
+		const errorMessage = getFirebaseAuthErrorMessage('auth/missing-nickname');
+		registerFail.classList.add('vissible');
+		failParagraph.innerHTML = errorMessage;
+		setTimeout(() => {
+			registerFail.classList.remove('vissible');
+		}, 3000);
+		console.log(errorMessage);
+	}
 });
 
 //user log in
-const loginForm = document.querySelector('#login');
-loginForm.addEventListener('click', (e) => {
+const loginBtn = document.querySelector('#loginBtn');
+loginBtn.addEventListener('click', (e) => {
 	e.preventDefault();
 	const email = document.querySelector('#user-email-login').value;
 	const password = document.querySelector('#user-password-login').value;
@@ -84,8 +259,13 @@ loginForm.addEventListener('click', (e) => {
 			console.log(userCredential.user);
 		})
 		.catch((error) => {
+			registerFail.classList.add('vissible');
 			const errorCode = error.code;
-			const errorMessage = error.message;
-			console.log(`kod błędu: ${errorCode} \n błąd: ${errorMessage}`);
+			const errorMessage = getFirebaseAuthErrorMessage(errorCode);
+			failParagraph.innerHTML = errorMessage;
+			console.log(errorMessage, errorCode);
+			setTimeout(() => {
+				registerFail.classList.remove('vissible');
+			}, 3000);
 		});
 });
