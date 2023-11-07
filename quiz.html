@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <script src="https://kit.fontawesome.com/89d0a0b474.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="Img/Icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Anify</title>
+</head>
+
+<body id="body">
+    <header class="header" id="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <a href="#main"><img src="Img/AnifyLogo.png" alt="Okrągłe logo 'Anify' na pomarańczowym tle"></a>
+            </div>
+            <div class="burger-menu" id="burger-menu">
+                <div class=" burger-bars"></div>
+            </div>
+            <div class="user-score-board vanish">
+                <h2 id="user-name" class="user-name"></h2>
+                <h3 id="user-score" class="user-score"></h3>
+            </div>
+            <div class="nav-buttons nav-desktop">
+                <a class="menu-btn logged-out avatar hidden" id="avatar"><img src="" alt="User's avatar"
+                        id="avatar-image"></a>
+                <ul id="user-list" class="user-list">
+                    <li class="list-item"><a class="menu-btn logged-out" href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="header__hero-img">
+            <div class="mobile-nav" id="mobile-nav">
+                <div class="nav-items">
+                    <div class="user-score-board">
+                        <h2 id="user-name" class="user-name"></h2>
+                        <h3 id="user-score" class="user-score"></h3>
+                    </div>
+                    <div class="nav-buttons">
+                        <a class="menu-btn" href="index.html">Home</a>
+                    </div>
+                </div>
+            </div>
+            <div class="header__hero-shadow">
+                <audio src="" id="audio"></audio>
+                <div class="quiz-card">
+                    <div class="quiz-timer">
+                        <h2 id="quiz-timer-time">10</h2>
+                    </div>
+                    <button class="quiz-btn" id="quiz-btn">Ready!</button>
+                    <div class="quiz-answers">
+                        <div class="quiz-answer">
+                            <h2></h2>
+                        </div>
+                        <div class="quiz-answer">
+                            <h2></h2>
+                        </div>
+                        <div class="quiz-answer">
+                            <h2></h2>
+                        </div>
+                        <div class="quiz-answer">
+                            <h2></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </header>
+    <script type="module" src="js/events.js"></script>
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/quiz.js"></script>
+</body>
+
+</html>

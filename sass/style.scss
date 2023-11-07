@@ -215,7 +215,7 @@ table {
 	border-bottom: 2px solid c.$main-color;
 	color: #fff;
 	font-size: 2rem;
-	padding-bottom: 1rem;
+	padding-bottom: 5px;
 }
 .mobile-search {
 	position: relative;
@@ -244,8 +244,10 @@ table {
 .mobile-search-result {
 	position: relative;
 	top: 0;
-	//border: 1px solid red;
-	transition: width 0.3s, height 0.3s;
+	border: 1px solid c.$main-color;
+	height: 160px;
+	border-radius: 0px;
+	//transition: width 0.3s, height 0.3s;
 }
 .text-input:focus {
 	outline: none !important;
@@ -254,10 +256,12 @@ table {
 	color: c.$main-color;
 	font-weight: bold;
 }
+/*
 .text-input:not(:focus) + .mobile-search-result {
 	width: 0;
 	height: 0;
 }
+*/
 .menu-btn {
 	position: relative;
 	padding: 2rem;
@@ -507,6 +511,7 @@ table {
 	border-radius: 10px;
 	padding: 1.5rem;
 	transition: box-shadow 0.3s;
+	//animation: glowing 5s ease-in-out;
 }
 .bar {
 	text-align: center;
@@ -953,6 +958,9 @@ input:not(:placeholder-shown) ~ label {
 .list-item:nth-of-type(2) {
 	top: 75px;
 }
+.list-item:nth-of-type(3) {
+	top: 150px;
+}
 .user-list-vissible {
 	opacity: 1;
 	top: 100px;
@@ -987,7 +995,80 @@ input:not(:placeholder-shown) ~ label {
 		width: 100%;
 	}
 }
-
+//quiz
+.quiz-card {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 1200px;
+	height: 600px;
+	//border: 1px solid c.$main-color;
+	gap: 5rem;
+	background-color: c.$dark-transparent;
+	border-radius: 10px;
+}
+.quiz-timer {
+	position: relative;
+	background-color: black;
+	width: 300px;
+	height: 200px;
+}
+.quiz-answers {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+	width: 100%;
+	height: 50%;
+	//border: red 1px solid;
+}
+.quiz-answer {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 100px;
+	width: 400px;
+	background-color: c.$main-color;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.quiz-btn {
+	background-color: c.$complementary-color;
+	width: 150px;
+	height: 50px;
+	border-radius: 20px;
+}
+.user-score-board {
+	text-align: center;
+	h2 {
+		font-size: 3rem;
+	}
+	h3 {
+		font-size: 2rem;
+	}
+}
+.quiz-timer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	h2 {
+		font-size: 10rem;
+	}
+	//animation: countdown 10s linear forwards;
+}
+.correct {
+	background-color: c.$green-transparent;
+	border: 2px solid c.$green;
+}
+.wrong {
+	background-color: c.$Red-transparent;
+	border: 2px solid c.$Red;
+}
 //other
 .vissible {
 	top: 10px;
@@ -998,6 +1079,41 @@ input:not(:placeholder-shown) ~ label {
 .opacity0 {
 	opacity: 0;
 }
+@keyframes countdown {
+	from {
+		width: 100%;
+	}
+	to {
+		width: 0;
+	}
+}
+@keyframes glowing {
+	0% {
+		-webkit-box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		-moz-box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		box-shadow: 0px 0px 75px 20px c.$complementary-color;
+	}
+	25% {
+		-webkit-box-shadow: 0px 0px 75px -100px c.$complementary-color;
+		-moz-box-shadow: 0px 0px 75px -100px c.$complementary-color;
+		box-shadow: 0px 0px 75px -100px c.$complementary-color;
+	}
+	50% {
+		-webkit-box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		-moz-box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		box-shadow: 0px 0px 75px 20px c.$complementary-color;
+	}
+	75% {
+		-webkit-box-shadow: 0px 0px 75px -100px c.$complementary-color;
+		-moz-box-shadow: 0px 0px 75px -100px c.$complementary-color;
+		box-shadow: 0px 0px 75px -100px c.$complementary-color;
+	}
+	100% {
+		-webkit-box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		-moz-box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		box-shadow: 0px 0px 75px 20px c.$complementary-color;
+	}
+}
 @media (max-width: 820px) {
 	/* Reguły CSS dla małych ekranów */
 	.main {
@@ -1005,6 +1121,7 @@ input:not(:placeholder-shown) ~ label {
 			width: 90%;
 		}
 	}
+
 	.header {
 		h1 {
 			font-size: 4vw;
@@ -1025,7 +1142,7 @@ input:not(:placeholder-shown) ~ label {
 		width: 90%;
 		justify-content: flex-start;
 		img {
-			max-width: 100px;
+			width: 50px;
 		}
 		&__searchWrapper {
 			display: none;
@@ -1088,6 +1205,32 @@ input:not(:placeholder-shown) ~ label {
 		h2 {
 			text-align: center;
 		}
+	}
+	.quiz-card {
+		background-color: transparent;
+	}
+	.quiz-answer {
+		position: static;
+		transform: translate(0, 0);
+		width: 70%;
+		height: 30%;
+	}
+	/*
+	.quiz-card {
+		position: relative;
+		top: 100px;
+	}
+	*/
+	.quiz-answers {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		height: 100%;
+	}
+	.vanish {
+		display: none;
 	}
 }
 

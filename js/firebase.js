@@ -11,13 +11,10 @@ import {
 	get,
 	ref as databaseRef,
 	child,
+	update,
+	onValue,
 } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js';
-import {
-	getStorage,
-	uploadBytes,
-	ref as storageRef,
-	getDownloadURL,
-} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js';
+
 const firebaseConfig = {
 	apiKey: 'AIzaSyDENO0IP6mXoH-R9N7xDUexVrDyqbQc0nA',
 	authDomain: 'anify-107a5.firebaseapp.com',
@@ -149,73 +146,8 @@ get(child(dbref, 'Openings/')).then((snapshot) => {
 				});
 			}
 		});
-		/*
-			
-
-			const cardElement = document.createElement('div');
-			cardElement.classList.add('card');
-
-			const imageContainer = document.createElement('div');
-			imageContainer.classList.add('image-container');
-
-			const imageElement = document.createElement('img');
-			imageElement.src = opening.Image;
-
-			const infoContainer = document.createElement('div');
-			infoContainer.classList.add('info');
-
-			const h2Element = document.createElement('h2');
-			h2Element.classList.add('anime-title');
-			h2Element.textContent = opening.Name;
-
-			const openingTitleElement = document.createElement('p');
-			openingTitleElement.classList.add('opening-title');
-			openingTitleElement.textContent = opening.Title;
-
-			const authorElement = document.createElement('p');
-			authorElement.classList.add('author');
-			authorElement.textContent = opening.Author;
-
-			const buttonsElement = document.createElement('div');
-			buttonsElement.classList.add('buttons');
-
-			const angleLeft = document.createElement('i');
-			angleLeft.classList.add('fa-solid');
-			angleLeft.classList.add('fa-angle-left');
-			const circlePlay = document.createElement('i');
-			circlePlay.classList.add('fa-regular');
-			circlePlay.classList.add('fa-circle-play');
-			const angleRight = document.createElement('i');
-			angleRight.classList.add('fa-solid');
-			angleRight.classList.add('fa-angle-right');
-
-			buttonsElement.appendChild(angleLeft);
-			buttonsElement.appendChild(circlePlay);
-			buttonsElement.appendChild(angleRight);
-
-			infoContainer.appendChild(h2Element);
-			infoContainer.appendChild(openingTitleElement);
-			infoContainer.appendChild(authorElement);
-
-			imageContainer.appendChild(imageElement);
-
-			cardElement.appendChild(imageContainer);
-			cardElement.appendChild(infoContainer);
-			cardElement.appendChild(buttonsElement);
-
-			parent.appendChild(cardElement);
-
-			cardElement.addEventListener('click', () => {
-				onYouTubeIframeAPIReady(opening);
-				togglePlayerActive();
-			});
-			*/
 	});
 });
-/*.catch((error) => {
-		alert(error);
-	});
-	*/
 
 export function clearResults(resultsArea) {
 	resultsArea.replaceChildren();
@@ -237,7 +169,8 @@ export function performSearch(searchInput, resultsArea) {
 					if (!savedData.includes(name)) {
 						if (name.includes(searchValue)) {
 							const resultTile = document.createElement('a');
-							resultTile.href = '#' + openingName;
+							resultTile.setAttribute('data-section', openingName);
+							//resultTile.href = '#' + openingName;
 							resultTile.classList.add('nav__resultTile');
 
 							const tileName = document.createElement('h2');
@@ -252,7 +185,12 @@ export function performSearch(searchInput, resultsArea) {
 
 								const children = parentElement.children;
 								const lastChild = children[children.length - 1];
+								parentElement.scrollIntoView({
+									behavior: 'smooth',
+								});
+								console.log(children);
 								lastChild.classList.toggle('card-hidden');
+								children[0].style.animation = 'glowing 5s 1s ease-in-out';
 							});
 						}
 						savedData.push(name);
@@ -269,18 +207,62 @@ console.log(namesArray);
 const loggedInElements = document.querySelectorAll('.logged-in');
 const loggedOutElements = document.querySelectorAll('.logged-out');
 const avatarImage = document.querySelector('#avatar-image');
-onAuthStateChanged(auth, (user) => {
-	if (user) {
+const userName = document.querySelectorAll('.user-name');
+const userScore = document.querySelectorAll('.user-score');
+const userScoreBoard = document.querySelector('.user-score-board');
+let userCurrentScore;
+let user;
+let userRef;
+onAuthStateChanged(auth, (userAuth) => {
+	if (userAuth) {
+		user = userAuth;
 		loggedInElements.forEach((element) => element.classList.add('hidden')); //.classList.add('hidden');
 		loggedOutElements.forEach((element) => element.classList.remove('hidden')); //.classList.remove('hidden');
-		console.log(user);
 		avatarImage.src = user.photoURL;
+		if (userScoreBoard) {
+			userRef = databaseRef(db, `Users/${userAuth.uid}`);
+
+			onValue(userRef, (snapshot) => {
+				const userInfo = snapshot.val();
+				userCurrentScore = userInfo.quizPoints;
+				// Loop through all elements with the class 'user-name'
+				userName.forEach((element) => {
+					element.innerHTML = userInfo.displayName;
+				});
+				// Loop through all elements with the class 'user-score'
+				userScore.forEach((element) => {
+					element.innerHTML = `Points: ${userCurrentScore}`;
+				});
+			});
+			get(child(dbref, `Users/${userAuth.uid}`)).then((snapshot) => {
+				const userInfo = snapshot.val();
+				userCurrentScore = userInfo.quizPoints;
+				// Loop through all elements with the class 'user-name'
+				userName.forEach((element) => {
+					element.innerHTML = userInfo.displayName;
+				});
+				// Loop through all elements with the class 'user-score'
+				userScore.forEach((element) => {
+					element.innerHTML = `Points: ${userCurrentScore}`;
+				});
+			});
+		}
 	} else {
 		loggedInElements.forEach((element) => element.classList.remove('hidden')); //.classList.remove('hidden');
 		loggedOutElements.forEach((element) => element.classList.add('hidden')); //.classList.add('hidden');
 	}
 });
+
+export function UpdatePoints() {
+	const updateData = {
+		displayName: user.displayName,
+		email: user.email,
+		quizPoints: (userCurrentScore += 3),
+	};
+	update(databaseRef(db, `/Users/${user.uid}`), updateData);
+}
 //sign Out
+
 const test = document.querySelectorAll('.logOut');
 test.forEach((logOutElement) => {
 	logOutElement.addEventListener('click', () => {
