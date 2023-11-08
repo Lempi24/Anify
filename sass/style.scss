@@ -797,17 +797,16 @@ input:not(:placeholder-shown) ~ label {
 //burger styling
 .burger-menu {
 	display: flex;
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translate(0%, -50%);
+	position: relative;
 	width: 50px;
 	height: 50px;
 }
 .burger-bars {
+	display: flex;
 	position: absolute;
 	width: 100%;
 	height: 10%;
+	top: 25%;
 	background-color: white;
 	border-radius: 20px;
 }
@@ -1038,7 +1037,7 @@ input:not(:placeholder-shown) ~ label {
 	cursor: pointer;
 }
 .quiz-btn {
-	background-color: c.$complementary-color;
+	background-color: c.$main-color;
 	width: 150px;
 	height: 50px;
 	border-radius: 20px;
@@ -1089,29 +1088,29 @@ input:not(:placeholder-shown) ~ label {
 }
 @keyframes glowing {
 	0% {
-		-webkit-box-shadow: 0px 0px 75px 20px c.$complementary-color;
-		-moz-box-shadow: 0px 0px 75px 20px c.$complementary-color;
-		box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		-webkit-box-shadow: 0px 0px 75px 20px c.$main-color;
+		-moz-box-shadow: 0px 0px 75px 20px c.$main-color;
+		box-shadow: 0px 0px 75px 20px c.$main-color;
 	}
 	25% {
-		-webkit-box-shadow: 0px 0px 75px -100px c.$complementary-color;
-		-moz-box-shadow: 0px 0px 75px -100px c.$complementary-color;
-		box-shadow: 0px 0px 75px -100px c.$complementary-color;
+		-webkit-box-shadow: 0px 0px 75px -100px c.$main-color;
+		-moz-box-shadow: 0px 0px 75px -100px c.$main-color;
+		box-shadow: 0px 0px 75px -100px c.$main-color;
 	}
 	50% {
-		-webkit-box-shadow: 0px 0px 75px 20px c.$complementary-color;
-		-moz-box-shadow: 0px 0px 75px 20px c.$complementary-color;
-		box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		-webkit-box-shadow: 0px 0px 75px 20px c.$main-color;
+		-moz-box-shadow: 0px 0px 75px 20px c.$main-color;
+		box-shadow: 0px 0px 75px 20px c.$main-color;
 	}
 	75% {
-		-webkit-box-shadow: 0px 0px 75px -100px c.$complementary-color;
-		-moz-box-shadow: 0px 0px 75px -100px c.$complementary-color;
-		box-shadow: 0px 0px 75px -100px c.$complementary-color;
+		-webkit-box-shadow: 0px 0px 75px -100px c.$main-color;
+		-moz-box-shadow: 0px 0px 75px -100px c.$main-color;
+		box-shadow: 0px 0px 75px -100px c.$main-color;
 	}
 	100% {
-		-webkit-box-shadow: 0px 0px 75px 20px c.$complementary-color;
-		-moz-box-shadow: 0px 0px 75px 20px c.$complementary-color;
-		box-shadow: 0px 0px 75px 20px c.$complementary-color;
+		-webkit-box-shadow: 0px 0px 75px 20px c.$main-color;
+		-moz-box-shadow: 0px 0px 75px 20px c.$main-color;
+		box-shadow: 0px 0px 75px 20px c.$main-color;
 	}
 }
 @media (max-width: 820px) {
@@ -1140,12 +1139,16 @@ input:not(:placeholder-shown) ~ label {
 	}
 	.nav {
 		width: 90%;
-		justify-content: flex-start;
+		align-items: center;
+		justify-content: space-around;
 		img {
 			width: 50px;
 		}
 		&__searchWrapper {
-			display: none;
+			width: 200px;
+		}
+		&__resultTile {
+			text-align: center;
 		}
 	}
 	.spacing {
