@@ -199,7 +199,7 @@ registerBtn.addEventListener('click', (e) => {
 				updateProfile(user, {
 					displayName: registerNickname,
 				});
-				console.log(user);
+				//console.log(user);
 				registerSuccess.classList.add('vissible');
 				registerForm.reset();
 				setTimeout(() => {
@@ -217,7 +217,7 @@ registerBtn.addEventListener('click', (e) => {
 				const errorCode = error.code;
 				const errorMessage = getFirebaseAuthErrorMessage(errorCode);
 				failParagraph.innerHTML = errorMessage;
-				console.log(errorMessage, errorCode);
+				//console.log(errorMessage, errorCode);
 				setTimeout(() => {
 					registerFail.classList.remove('vissible');
 				}, 3000);
@@ -229,7 +229,7 @@ registerBtn.addEventListener('click', (e) => {
 		setTimeout(() => {
 			registerFail.classList.remove('vissible');
 		}, 3000);
-		console.log(errorMessage);
+		//console.log(errorMessage);
 	}
 });
 
@@ -248,22 +248,22 @@ loginBtn.addEventListener('click', (e) => {
 						'https://firebasestorage.googleapis.com/v0/b/anify-107a5.appspot.com/o/Avatars%2FNo%20avatar.jpg?alt=media&token=b1658590-936d-42ea-91b3-b8588de1eea0',
 				})
 					.then(() => {
-						console.log('Profil zaaktualizowany');
+						//console.log('Profil zaaktualizowany');
 					})
 					.catch((error) => {
-						console.log(error);
+						//console.log(error);
 					});
 			}
 			window.location.replace('index.html');
-			console.log('User loged in');
-			console.log(userCredential.user);
+			//console.log('User loged in');
+			//console.log(userCredential.user);
 		})
 		.catch((error) => {
 			registerFail.classList.add('vissible');
 			const errorCode = error.code;
 			const errorMessage = getFirebaseAuthErrorMessage(errorCode);
 			failParagraph.innerHTML = errorMessage;
-			console.log(errorMessage, errorCode);
+			//console.log(errorMessage, errorCode);
 			setTimeout(() => {
 				registerFail.classList.remove('vissible');
 			}, 3000);

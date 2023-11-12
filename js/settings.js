@@ -38,17 +38,17 @@ editCurrentP.addEventListener('click', () => {
 changeDataBtn.addEventListener('click', (e) => {
 	e.preventDefault();
 	const changedEmail = document.querySelector('#user-changed-email').value;
-	console.log(changedEmail);
+	//console.log(changedEmail);
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			updateEmail(user, changedEmail)
 				.then(() => {
 					sendEmailVerification(user).then(() => {
-						console.log('Wiadomość e-mail weryfikacyjna wysłana pomyślnie.');
+						//console.log('Wiadomość e-mail weryfikacyjna wysłana pomyślnie.');
 					});
 				})
 				.catch((error) => {
-					console.log(error.message);
+					//console.log(error.message);
 				});
 		} else {
 		}
@@ -60,23 +60,23 @@ avatarInput.addEventListener('change', () => {
 	if (user) {
 		const userEmail = user.email;
 		uploadBytes(ref(storage, 'Avatars/' + userEmail), file).then((snapshot) => {
-			console.log(ref(storage));
-			console.log('Uploaded a blob for file!');
+			//console.log(ref(storage));
+			//console.log('Uploaded a blob for file!');
 			getDownloadURL(ref(storage, 'Avatars/' + userEmail)).then((url) => {
 				updateProfile(user, {
 					photoURL: url,
 				})
 					.then(() => {
-						console.log('Profil zaaktualizowany');
+						//console.log('Profil zaaktualizowany');
 						window.location.reload();
 					})
 					.catch((error) => {
-						console.log(error);
+						//console.log(error);
 					});
 			});
 		});
 	} else {
-		console.log('Użytkownik nie jest zalogowany.');
+		//console.log('Użytkownik nie jest zalogowany.');
 	}
 });
 
@@ -84,7 +84,7 @@ onAuthStateChanged(auth, (user) => {
 	if (user) {
 		currentEmail.innerHTML = user.email;
 		avatarImage.src = user.photoURL;
-		console.log(user);
+		//console.log(user);
 	} else {
 	}
 });

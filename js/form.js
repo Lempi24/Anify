@@ -37,7 +37,7 @@ submitBtn.addEventListener('click', (e) => {
 	formInput.forEach((element) => {
 		if (element.value === '') {
 			isFormValid = false;
-			console.log('Nie ma wszystkich danych');
+			//console.log('Nie ma wszystkich danych');
 		}
 	});
 	if (!isFormValid) {
@@ -45,7 +45,7 @@ submitBtn.addEventListener('click', (e) => {
 		failBox.classList.add('vissible');
 		logo.classList.add('opacity0');
 		menu.forEach((menuElement) => {
-			console.log(menuElement);
+			//console.log(menuElement);
 			menuElement.classList.add('opacity0');
 		});
 		setTimeout(() => {
@@ -74,7 +74,7 @@ submitBtn.addEventListener('click', (e) => {
 		successBox.classList.add('vissible');
 		logo.classList.add('opacity0');
 		menu.forEach((menuElement) => {
-			console.log(menuElement);
+			//console.log(menuElement);
 			menuElement.classList.add('opacity0');
 		});
 		form.reset();

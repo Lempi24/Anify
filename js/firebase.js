@@ -188,7 +188,7 @@ export function performSearch(searchInput, resultsArea) {
 								parentElement.scrollIntoView({
 									behavior: 'smooth',
 								});
-								console.log(children);
+								//console.log(children);
 								lastChild.classList.toggle('card-hidden');
 								children[0].style.animation = 'glowing 5s 1s ease-in-out';
 							});
@@ -202,7 +202,7 @@ export function performSearch(searchInput, resultsArea) {
 			console.error('Error fetching data:', error);
 		});
 }
-console.log(namesArray);
+//console.log(namesArray);
 //listening for auth changes
 const loggedInElements = document.querySelectorAll('.logged-in');
 const loggedOutElements = document.querySelectorAll('.logged-out');

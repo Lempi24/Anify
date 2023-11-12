@@ -1333,6 +1333,9 @@ input:not(:placeholder-shown) ~ label {
   .player {
     height: 50%;
   }
+  .player-controlls {
+    width: 70%;
+  }
 }
 @media (min-width: 1201px) {
   /* Reguły CSS dla dużych ekranów */

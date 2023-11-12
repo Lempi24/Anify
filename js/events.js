@@ -119,24 +119,26 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 stateBtn.addEventListener('click', () => {
 	const playerState = player.getPlayerState();
 	const playerBackgroundState = player2.getPlayerState();
+	const playVideos = () => {
+		playersArray.forEach((player) => {
+			player.playVideo();
+		});
+	};
+
+	const pauseVideos = () => {
+		playersArray.forEach((player) => {
+			player.pauseVideo();
+		});
+	};
+
 	if (
-		playerState === YT.PlayerState.CUED &&
-		playerBackgroundState === YT.PlayerState.CUED
+		(playerState === YT.PlayerState.CUED &&
+			playerBackgroundState === YT.PlayerState.CUED) ||
+		playerState === YT.PlayerState.PAUSED
 	) {
-		for (let i = 0; i < playersArray.length; i++) {
-			playersArray[i].playVideo();
-		}
-		iconBtn.className = 'fa-solid fa-pause';
+		playVideos();
 	} else if (playerState === YT.PlayerState.PLAYING) {
-		for (let i = 0; i < playersArray.length; i++) {
-			playersArray[i].pauseVideo();
-		}
-		iconBtn.className = 'fa-solid fa-play';
-	} else if (playerState === YT.PlayerState.PAUSED) {
-		for (let i = 0; i < playersArray.length; i++) {
-			playersArray[i].playVideo();
-		}
-		iconBtn.className = 'fa-solid fa-pause';
+		pauseVideos();
 	}
 });
 
@@ -191,23 +193,32 @@ function changeTimeStampValue() {
 	timeStampSlider.value = currentTime;
 }
 function skipTime() {
-	iconBtn.className = 'fa-solid fa-pause';
+	//iconBtn.className = 'fa-solid fa-pause';
 	currentTime = timeStampSlider.value;
 	for (let i = 0; i < playersArray.length; i++) {
 		playersArray[i].seekTo(currentTime);
 	}
 }
 timeStampSlider.oninput = skipTime;
+function changeStateIcon() {
+	const playerState = player.getPlayerState();
+	if (playerState === YT.PlayerState.PLAYING) {
+		iconBtn.className = 'fa-solid fa-pause';
+	} else {
+		iconBtn.className = 'fa-solid fa-play';
+	}
+}
 function onPlayerStateChange(event) {
+	changeStateIcon();
 	const mainPlayer = player;
 	const backgroundPlayer = player2;
-	console.log('zmiana stanu');
+	//console.log('zmiana stanu');
 	const mainPlayerTime = mainPlayer.getCurrentTime();
 	const backgroundPlayerTime = backgroundPlayer.getCurrentTime();
 	const errorMargin = 0.1;
 
 	if (Math.abs(mainPlayerTime - backgroundPlayerTime) > errorMargin) {
-		console.log(Math.abs(mainPlayerTime - backgroundPlayerTime));
+		//console.log(Math.abs(mainPlayerTime - backgroundPlayerTime));
 		backgroundPlayer.seekTo(mainPlayerTime);
 	}
 

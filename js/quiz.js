@@ -69,9 +69,10 @@ quizBtn.addEventListener('click', () => {
 	correctAnswerIndex = Math.floor(
 		Math.random() * Object.keys(choosenKeys).length
 	);
-	console.log(correctAnswerIndex);
-	console.log(choosenKeys);
+	//console.log(correctAnswerIndex);
+	//console.log(choosenKeys);
 	audio.src = choosenKeys[Object.keys(choosenKeys)[correctAnswerIndex]];
+	audio.volume = 0.1;
 	audio.play();
 	quizAnswers.forEach((answer, i) => {
 		answer.querySelector('h2').textContent = Object.keys(choosenKeys)[i];
@@ -102,5 +103,5 @@ quizBtn.addEventListener('click', () => {
 			answer.removeEventListener('click', clickHandler);
 		});
 	}
-	console.log(choosenKeys[Object.keys(choosenKeys)[correctAnswerIndex]]);
+	//console.log(choosenKeys[Object.keys(choosenKeys)[correctAnswerIndex]]);
 });
