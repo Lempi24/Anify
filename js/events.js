@@ -21,7 +21,7 @@ const searchClickElement = document.querySelector('.nav__searchResult');
 const playerToShow = document.querySelector('.player');
 const burgerMenu = document.querySelector('#burger-menu');
 const mobileNav = document.querySelector('#mobile-nav');
-const h1 = document.querySelector('#h1');
+const header = document.querySelector('.header__hero-text');
 const tag = document.createElement('script');
 tag.src = 'https://www.youtube.com/iframe_api';
 const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -29,11 +29,11 @@ burgerMenu.addEventListener('click', () => {
 	if (burgerMenu.classList.contains('change')) {
 		burgerMenu.classList.remove('change');
 		mobileNav.classList.remove('mobile-nav-change');
-		h1.classList.remove('h1-disable');
+		header.classList.remove('h1-disable');
 	} else {
 		burgerMenu.classList.add('change');
 		mobileNav.classList.add('mobile-nav-change');
-		h1.classList.add('h1-disable');
+		header.classList.add('h1-disable');
 	}
 });
 
@@ -218,4 +218,3 @@ function onPlayerStateChange(event) {
 	}
 	*/
 }
-
