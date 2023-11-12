@@ -1312,6 +1312,9 @@ input:not(:placeholder-shown) ~ label {
     flex-direction: column;
     height: 100%;
   }
+  .nav-quiz {
+    justify-content: space-between;
+  }
   .vanish {
     display: none;
   }
