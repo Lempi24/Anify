@@ -18,6 +18,7 @@ const fullTimeH3 = document.querySelector('#fullTimeH3');
 const currentTimeElement = document.querySelector('#currentTime');
 const body = document.querySelector('#body');
 const searchClickElement = document.querySelector('.nav__searchResult');
+const searchWrapper = document.querySelector('.nav__searchWrapper');
 const playerToShow = document.querySelector('.player');
 const burgerMenu = document.querySelector('#burger-menu');
 const mobileNav = document.querySelector('#mobile-nav');
@@ -30,10 +31,12 @@ burgerMenu.addEventListener('click', () => {
 		burgerMenu.classList.remove('change');
 		mobileNav.classList.remove('mobile-nav-change');
 		header.classList.remove('h1-disable');
+		searchWrapper.classList.remove('hidden');
 	} else {
 		burgerMenu.classList.add('change');
 		mobileNav.classList.add('mobile-nav-change');
 		header.classList.add('h1-disable');
+		searchWrapper.classList.add('hidden');
 	}
 });
 

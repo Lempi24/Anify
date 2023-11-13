@@ -277,12 +277,13 @@ table {
 */
 .menu-btn {
   position: relative;
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: transparent;
   color: #0582ca;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 1.5rem;
+  text-align: center;
   cursor: pointer;
 }
 .menu-btn img {
@@ -1011,12 +1012,13 @@ input:not(:placeholder-shown) ~ label {
 }
 
 .avatar {
-  position: absolute;
+  position: relative;
 }
 
 .user-list {
   position: relative;
-  top: 0px;
+  top: -100px;
+  width: 130px;
   opacity: 0;
   pointer-events: none;
   transition: all 0.3s;
@@ -1024,7 +1026,7 @@ input:not(:placeholder-shown) ~ label {
 
 .list-item {
   position: absolute;
-  width: 120px;
+  min-width: 120px;
   left: 50%;
   transform: translate(-50%);
 }
@@ -1039,7 +1041,7 @@ input:not(:placeholder-shown) ~ label {
 
 .user-list-vissible {
   opacity: 1;
-  top: 100px;
+  top: 0;
   pointer-events: all;
 }
 
@@ -1312,7 +1314,7 @@ input:not(:placeholder-shown) ~ label {
     flex-direction: column;
     height: 100%;
   }
-  .nav-quiz {
+  .nav-no-search {
     justify-content: space-between;
   }
   .vanish {
