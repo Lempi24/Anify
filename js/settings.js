@@ -32,6 +32,7 @@ const currentEmail = document.querySelector('#current-email');
 const editCurrentP = document.querySelector('#edit-current-p');
 const changeEmailForm = document.querySelector('#change-email-form');
 const changeDataBtn = document.querySelector('#change-data-submit');
+/*
 editCurrentP.addEventListener('click', () => {
 	changeEmailForm.classList.toggle('change-dissabled');
 });
@@ -54,6 +55,7 @@ changeDataBtn.addEventListener('click', (e) => {
 		}
 	});
 });
+*/
 avatarInput.addEventListener('change', () => {
 	const file = avatarInput.files[0];
 	const user = auth.currentUser;
@@ -82,7 +84,6 @@ avatarInput.addEventListener('change', () => {
 
 onAuthStateChanged(auth, (user) => {
 	if (user) {
-		currentEmail.innerHTML = user.email;
 		avatarImage.src = user.photoURL;
 		//console.log(user);
 	} else {
