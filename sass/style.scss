@@ -548,12 +548,24 @@ table {
 	z-index: 9999;
 	pointer-events: none;
 }
-
 .player-bcg-container {
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+.player-cover {
+	position: fixed;
+	top: 50%;
+	right: 50%;
+	transform: translate(50%, -50%);
+	width: 70%;
+	height: 70%;
+	border-radius: 20px;
+	z-index: 99999999;
+	cursor: pointer;
 }
 .player-background {
 	position: fixed;
@@ -1186,6 +1198,11 @@ input:not(:placeholder-shown) ~ label {
 		width: 100%;
 		height: 30%;
 	}
+	.player-cover {
+		top: 40%;
+		width: 100%;
+		height: 30%;
+	}
 	.register-success {
 		width: 300px;
 		height: 100px;
@@ -1267,6 +1284,9 @@ input:not(:placeholder-shown) ~ label {
 		display: none;
 	}
 	.player {
+		height: 50%;
+	}
+	.player-cover {
 		height: 50%;
 	}
 	.player-controlls {

@@ -6,6 +6,7 @@ const playerElement = document.querySelector('#player-background');
 const iconBtn = document.querySelector('#icon-btn');
 const stateBtn = document.querySelector('#player-btn');
 const playerControlls = document.querySelector('#player-controlls');
+const playerBcgContainer = document.querySelector('.player-bcg-container');
 const closeBtn = document.querySelector('#close-btn');
 let slider = document.querySelector('#slider');
 let volume = 50;
@@ -20,6 +21,7 @@ const body = document.querySelector('#body');
 const searchClickElement = document.querySelector('.nav__searchResult');
 const searchWrapper = document.querySelector('.nav__searchWrapper');
 const playerToShow = document.querySelector('.player');
+const playerCover = document.querySelector('.player-cover');
 const burgerMenu = document.querySelector('#burger-menu');
 const mobileNav = document.querySelector('#mobile-nav');
 const header = document.querySelector('.header__hero-text');
@@ -46,30 +48,32 @@ function onYouTubeIframeAPIReady(opening) {
 		height: '1080',
 		width: '1920',
 		videoId: `${opening.Video}`,
-		events: {
-			onReady: onPlayerReady,
-			onStateChange: onPlayerStateChange,
-		},
 		playerVars: {
 			controls: '0',
 			iv_load_policy: '3',
 			suggestedQuality: 'highres',
 		},
+		events: {
+			onReady: onPlayerReady,
+			onStateChange: onPlayerStateChange,
+		},
+		origin: window.location.origin,
 	});
 	playersArray.push(player);
 	player2 = new YT.Player('player-background', {
 		height: '144',
 		width: '192',
 		videoId: `${opening.Video}`,
-		events: {
-			onReady: mute,
-			onStateChange: onPlayerStateChange,
-		},
 		playerVars: {
 			controls: '0',
 			iv_load_policy: '3',
 			suggestedQuality: 'small',
 		},
+		events: {
+			onReady: mute,
+			//onStateChange: onPlayerStateChange,
+		},
+		origin: window.location.origin,
 	});
 	playersArray.push(player2);
 }
@@ -86,6 +90,8 @@ function togglePlayerActive() {
 	main.style.pointerEvents = 'none';
 	body.style.overflow = 'hidden';
 	searchClickElement.style.pointerEvents = 'none';
+	playerBcgContainer.classList.toggle('hidden');
+	//playerContainer.classList.toggle('hidden');
 }
 function createTimeStamp() {
 	//slider
@@ -120,7 +126,7 @@ function startShowingCurrentTime() {
 tag.onload = onYouTubeIframeAPIReady;
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-stateBtn.addEventListener('click', () => {
+function manageVideoPlayback() {
 	const playerState = player.getPlayerState();
 	const playerBackgroundState = player2.getPlayerState();
 	const playVideos = () => {
@@ -144,6 +150,14 @@ stateBtn.addEventListener('click', () => {
 	} else if (playerState === YT.PlayerState.PLAYING) {
 		pauseVideos();
 	}
+}
+
+stateBtn.addEventListener('click', () => {
+	manageVideoPlayback();
+});
+
+playerCover.addEventListener('click', () => {
+	manageVideoPlayback();
 });
 
 closeBtn.addEventListener('click', () => {
@@ -160,6 +174,8 @@ closeBtn.addEventListener('click', () => {
 	playerToShow.classList.toggle('player-show');
 	body.style.overflowY = 'scroll';
 	searchClickElement.style.pointerEvents = 'auto';
+	playerBcgContainer.classList.toggle('hidden');
+	//playerContainer.classList.toggle('hidden');
 	playersArray = [];
 	clearInterval(intervalId);
 	intervalId = null;
@@ -216,7 +232,7 @@ function onPlayerStateChange(event) {
 	changeStateIcon();
 	const mainPlayer = player;
 	const backgroundPlayer = player2;
-	//console.log('zmiana stanu');
+
 	const mainPlayerTime = mainPlayer.getCurrentTime();
 	const backgroundPlayerTime = backgroundPlayer.getCurrentTime();
 	const errorMargin = 0.1;
@@ -225,7 +241,7 @@ function onPlayerStateChange(event) {
 		//console.log(Math.abs(mainPlayerTime - backgroundPlayerTime));
 		backgroundPlayer.seekTo(mainPlayerTime);
 	}
-
+	console.log('zmiana stanu');
 	/*if (player2.getPlayerState() === 3) {
 		player.pauseVideo();
 	} else if (player2.getPlayerState() === 1) {
